@@ -1,0 +1,71 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "hackathon-submit",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -288,
+        -16
+      ],
+      "id": "ea81d376-88ed-4b36-b712-3640604e643b",
+      "name": "Webhook",
+      "webhookId": "9477ff19-1ea9-442f-9873-30a741129939"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.body.student_email }}",
+        "subject": "=Hackathon Confirmation",
+        "message": "=Hello{{ $json.body.student_email }}\n\nYour hackathon answers have been submitted successfully.\n\nScore:{{ $json.body.score }}\n\nYou will be notified once the recruiter reviews the results.\n\nRegards,\nAI Recruitment System",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -80,
+        -16
+      ],
+      "id": "60318f3f-2b95-47fb-a5fb-dcf993128b49",
+      "name": "Send a message",
+      "webhookId": "a6d73a29-f9ec-423f-b854-95b87115f88e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "uV4o1ge1eSntN1fl",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "6506bdc6-7804-469d-823d-5bbf46abbaff",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "95744a3477b0a3a3272b1e004274a2d1dad15cf7dffa5e17b8da106b8caaf8d1"
+  },
+  "id": "ePWAc05Bs8RKXbuR",
+  "tags": []
+}
