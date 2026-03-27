@@ -81,6 +81,7 @@ def open_register_window():
             messagebox.showerror("Error", "Year and CGPA cannot be empty")
             return
 
+<<<<<<< HEAD
         try:
             conn = mysql.connector.connect(
                 host="localhost",
@@ -106,14 +107,46 @@ def open_register_window():
 
             cursor.close()
             conn.close()
+=======
+        # try:
+        #     conn = mysql.connector.connect(
+        #         host="localhost",
+        #         user="root",
+        #         password="rishik@12345",
+        #         database="studentregister"
+        #     )
+
+        #     cursor = conn.cursor()
+
+        #     sql = """INSERT INTO student
+        #     (name,email,phone_number,password,college_name,branch,year,CGPA,
+        #      skills,primary_skill,skill_level,degree)
+        #     VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+
+        #     values = (
+        #         name, email, phone_number, password, college_name, branch,
+        #         year, CGPA, skills, primary_skill, skill_level, degree
+        #     )
+
+        #     cursor.execute(sql, values)
+        #     conn.commit()
+
+        #     cursor.close()
+        #     conn.close()
+>>>>>>> b1e2a6f (Added requirement.txt)
 
             messagebox.showinfo("Success", "Registration successful!")
 
             window.destroy()
             studentlogin.open_login_window()
 
+<<<<<<< HEAD
         except Exception as e:
             messagebox.showerror("Database Error", str(e))
+=======
+        # except Exception as e:
+        #     messagebox.showerror("Database Error", str(e))
+>>>>>>> b1e2a6f (Added requirement.txt)
 
     # ------------------ Register Button ------------------
 

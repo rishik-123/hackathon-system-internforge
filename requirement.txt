@@ -1,0 +1,10 @@
+tkinter
+MySQL
+MySQL
+requests
+cv2
+difflib ,SequenceMatcher
+threading
+genai
+PyPDF2
+docx import Document
