@@ -1,6 +1,6 @@
 import tkinter as tk
-import resumeupload
-import hackathon_ui
+# import resumeupload
+# import hackathon_ui
 
 def open_dashboard(name, email):   # ✅ 2 parameters
 

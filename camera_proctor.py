@@ -1,5 +1,5 @@
-import cv2
-import threading
+# import cv2
+# import threading
 
 camera_running = False
 

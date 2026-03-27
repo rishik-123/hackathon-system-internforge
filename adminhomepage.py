@@ -1,57 +1,53 @@
 import tkinter as tk
 import mysql.connector
 from tkinter import messagebox
-import recruiter_request
-import student_invite
-
+# import recruiter_request
+# import student_invite
 
 def open_recruiter_page(recruiter_id):
-
     window = tk.Tk()
     window.title("InternForge - Recruiter Page")
     window.geometry("500x650")
+    window.configure(bg="#67a69e")
 
     current_job_id = None
+    label_style = {"bg": "#cfc6b0", "fg": "#2F3E46", "font": ("Segoe UI", 10, "bold italic")}
+    entry_font = ("Segoe UI", 10)
 
     # ------------------ Form Fields ------------------
-
-    tk.Label(window, text="Recruiter Name").place(x=20, y=20)
-    recruiternameField = tk.Entry(window)
+    tk.Label(window, text="Recruiter Name", **label_style).place(x=20, y=20)
+    recruiternameField = tk.Entry(window, font=entry_font)
     recruiternameField.place(x=220, y=20)
 
-    tk.Label(window, text="Company Name").place(x=20, y=60)
-    companynameTextField = tk.Entry(window)
+    tk.Label(window, text="Company Name", **label_style).place(x=20, y=60)
+    companynameTextField = tk.Entry(window, font=entry_font)
     companynameTextField.place(x=220, y=60)
 
-    tk.Label(window, text="Job Role").place(x=20, y=100)
-    jobroleTextField = tk.Entry(window)
+    tk.Label(window, text="Job Role", **label_style).place(x=20, y=100)
+    jobroleTextField = tk.Entry(window, font=entry_font)
     jobroleTextField.place(x=220, y=100)
 
-    tk.Label(window, text="Primary Skill").place(x=20, y=140)
-    primaryskillTextField = tk.Entry(window)
+    tk.Label(window, text="Primary Skill", **label_style).place(x=20, y=140)
+    primaryskillTextField = tk.Entry(window, font=entry_font)
     primaryskillTextField.place(x=220, y=140)
 
-    tk.Label(window, text="Minimum CGPA").place(x=20, y=180)
-    min_cgpaTextField = tk.Entry(window)
+    tk.Label(window, text="Minimum CGPA", **label_style).place(x=20, y=180)
+    min_cgpaTextField = tk.Entry(window, font=entry_font)
     min_cgpaTextField.place(x=220, y=180)
 
-    tk.Label(window, text="Required Branch").place(x=20, y=220)
-    branchTextField = tk.Entry(window)
+    tk.Label(window, text="Required Branch", **label_style).place(x=20, y=220)
+    branchTextField = tk.Entry(window, font=entry_font)
     branchTextField.place(x=220, y=220)
 
     # ------------------ MAIN FUNCTION ------------------
-
     def register_recruiter():
-
         nonlocal current_job_id
-
         recruiter_name = recruiternameField.get().strip()
         company_name = companynameTextField.get().strip()
         job_role = jobroleTextField.get().strip()
         primary_skill = primaryskillTextField.get().strip()
         branch = branchTextField.get().strip()
 
-        # 🔴 Validation
         if not all([recruiter_name, company_name, job_role, primary_skill, branch]):
             messagebox.showerror("Error", "All fields are required")
             return
@@ -62,89 +58,38 @@ def open_recruiter_page(recruiter_id):
             messagebox.showerror("Error", "Invalid CGPA")
             return
 
+        # ------------------ Database Operations (Commented for GUI test) ------------------
+        """
         try:
-
             conn = mysql.connector.connect(
                 host="localhost",
                 user="root",
                 password="rishik@12345",
                 database="studentregister"
             )
-
             cursor = conn.cursor()
-
-            # 🔹 Insert job
             cursor.execute(
-                """INSERT INTO recruiter_requirements
+                \"\"\"INSERT INTO recruiter_requirements
                 (recruiter_id,recruiter_name,company_name,job_role,primary_skill,min_cgpa,branch)
-                VALUES (%s,%s,%s,%s,%s,%s,%s)""",
+                VALUES (%s,%s,%s,%s,%s,%s,%s)\"\"\",
                 (recruiter_id, recruiter_name, company_name,
                  job_role, primary_skill, min_cgpa, branch)
             )
-
             conn.commit()
             current_job_id = cursor.lastrowid
-
-            messagebox.showinfo("Success", "Job Posted Successfully")
-
-            # 🔹 Consultancy Request
-            REQUIRED = 10
-            INVITE_COUNT = 50
-
-            recruiter_request.store_request(
-                company_name,
-                job_role,
-                REQUIRED,
-                INVITE_COUNT,
-                "recruiter@email.com"  # later dynamic
-            )
-
-            # 🔹 Get matching students
-            cursor.execute(
-                """SELECT name,email,cgpa 
-                   FROM student 
-                   WHERE branch=%s AND cgpa >= %s
-                   LIMIT %s""",
-                (branch, min_cgpa, INVITE_COUNT)
-            )
-
-            students = cursor.fetchall()
-
-            if not students:
-                messagebox.showinfo("Info", "No matching students found")
-                return
-
-            # 🔹 Show invited students
-            result_window = tk.Toplevel(window)
-            result_window.title("Invited Candidates")
-            result_window.geometry("400x350")
-
-            tk.Label(result_window,
-                     text="Students Invited for Hackathon",
-                     font=("Arial", 12, "bold")).pack(pady=10)
-
-            for student in students:
-                name, email, cgpa = student
-
-                tk.Label(result_window,
-                         text=f"{name} | {email} | CGPA: {cgpa}").pack()
-
-                # 🔥 Send invitation
-                try:
-                    student_invite.invite_students(email)
-                except Exception as e:
-                    print("Mail error:", e)
-
-            messagebox.showinfo("Success", "Invitations sent successfully")
-
             cursor.close()
             conn.close()
-
         except Exception as e:
             messagebox.showerror("Database Error", str(e))
+            return
+        """
+
+        messagebox.showinfo("Success", "Job Posted Successfully (GUI Mode)")
+
+        # ------------------ Info / Invitations ------------------
+        info_message()
 
     # ------------------ INFO BUTTON ------------------
-
     def info_message():
         messagebox.showinfo(
             "Hackathon Info",
@@ -152,24 +97,33 @@ def open_recruiter_page(recruiter_id):
         )
 
     # ------------------ BUTTONS ------------------
+    tk.Button(
+        window,
+        text="Post Job & Invite Students",
+        command=register_recruiter,
+        bg="#dddecc",
+        fg="#2F3E46",
+        font=("Segoe UI", 10, "bold italic"),
+        relief="raised",
+        bd=2,
+        width=25
+    ).place(x=130, y=500)
 
-    tk.Button(window,
-              text="Post Job & Invite Students",
-              command=register_recruiter,
-              bg="green",
-              fg="white",
-              width=25).place(x=130, y=500)
-
-    tk.Button(window,
-              text="Hackathon Info",
-              command=info_message,
-              bg="blue",
-              fg="white",
-              width=25).place(x=130, y=550)
+    tk.Button(
+        window,
+        text="Hackathon Info",
+        command=info_message,
+        bg="#dddecc",
+        fg="#2F3E46",
+        font=("Segoe UI", 10, "bold italic"),
+        relief="raised",
+        bd=2,
+        width=25
+    ).place(x=130, y=550)
 
     window.mainloop()
 
 
-# Run directly
+#  Main guard for direct execution
 if __name__ == "__main__":
     open_recruiter_page(1)
