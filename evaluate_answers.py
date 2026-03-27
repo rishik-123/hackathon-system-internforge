@@ -20,7 +20,7 @@ def evaluate_student(email):
 
     score = 0
 
-    # 🔥 TEMP LOGIC (so project works TODAY)
+    # 
     for ans in answers:
         if ans[0] and len(ans[0]) > 5:
             score += 1

@@ -19,7 +19,7 @@ def rank_students():
 
     students = cursor.fetchall()
 
-    top_students = students[:10]   # 🔥 top 10
+    top_students = students[:10]   #  top 10
 
     for student in students:
 

@@ -3,7 +3,7 @@ from evaluate_answers import evaluate_student
 
 def process_result(email, time_taken):
 
-    score = evaluate_student(email)   # 🔥 Gemini से score आएगा
+    score = evaluate_student(email)  
 
     # simple shortlist logic
     if score >= 3:

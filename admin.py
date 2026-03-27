@@ -60,7 +60,5 @@ def adminlogin():
     ).pack(pady=10)
 
     window.mainloop()
-
-# ✅ Main guard to run GUI when script is executed directly
 if __name__ == "__main__":
     adminlogin()

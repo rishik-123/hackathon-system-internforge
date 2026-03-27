@@ -23,9 +23,6 @@ def evaluate(question, student_answer):
         print("AI Failed → Using fallback:", e)
 
         return fallback_score(question, student_answer)
-
-
-# 🔥 SMART FALLBACK (BETTER THAN BEFORE)
 def fallback_score(question, answer):
 
     keywords = question.lower().split()
